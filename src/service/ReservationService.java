@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Date;
 
 public interface ReservationService {
-    public static Long reservationCount = 0L;
     public void addRoom(IRoom room);
     public IRoom getARoom(String roomNumber);
     public Reservation reserveRoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate);
