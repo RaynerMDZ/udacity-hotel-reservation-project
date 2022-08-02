@@ -30,7 +30,6 @@ public class Customer {
         return email;
     }
 
-    // toString() method
     public String toString() {
         return "First Name: " + firstName + "\nLast Name: " + lastName + "\nEmail: " + email;
     }

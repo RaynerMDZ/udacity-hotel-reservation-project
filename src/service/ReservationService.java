@@ -13,6 +13,6 @@ public interface ReservationService {
     public Reservation reserveRoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate);
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate);
     public Collection<Reservation> getCustomersReservation(Customer customer);
-    public void printAllReservations();
+    public Collection<Reservation> printAllReservations();
 
 }

@@ -6,9 +6,11 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class CustomerRepositoryImpl implements CustomerRepository {
+    private final Collection<Customer> customer;
     private static CustomerRepositoryImpl instance = null;
 
     private CustomerRepositoryImpl() {
+        this.customer = new HashSet<>();
     }
 
     public static CustomerRepositoryImpl getInstance() {
@@ -17,8 +19,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         return instance;
     }
-
-    private final Collection<Customer> customer = new HashSet<>();
 
     @Override
     public Collection<Customer> getAllCustomers() {
@@ -35,15 +35,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public void addCustomer(String email, String firstName, String lastName) throws IllegalArgumentException {
-        if (this.getACustomer(email) == null) {
-            this.customer.add(new Customer(email, firstName, lastName));
-            return;
+        if (customerExists(email)) {
+            throw new IllegalArgumentException("Customer already exists.");
         }
-        throw new IllegalArgumentException("Customer already exists");
+        this.customer.add(new Customer(email, firstName, lastName));
+
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) throws IllegalArgumentException {
         if (this.getACustomer(customer.getEmail()) == null) {
             throw new IllegalArgumentException("Customer does not exist");
         }
@@ -52,10 +52,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public void deleteCustomer(Customer customer) {
+    public void deleteCustomer(Customer customer) throws IllegalArgumentException {
         if (this.getACustomer(customer.getEmail()) == null) {
             throw new IllegalArgumentException("Customer does not exist");
         }
         this.customer.remove(customer);
+    }
+
+    private boolean customerExists(String email) {
+        return this.customer.stream()
+                .anyMatch(customer -> customer.getEmail().equals(email));
     }
 }

@@ -6,6 +6,10 @@ public class Room implements IRoom {
     private RoomType roomType;
     private boolean isFree;
 
+    public Room(Double roomPrice) {
+        this.roomPrice = roomPrice;
+    }
+
     public Room(String roomNumber, Double roomPrice, RoomType roomType) {
         this.roomNumber = roomNumber;
         this.roomPrice = roomPrice;
@@ -30,6 +34,6 @@ public class Room implements IRoom {
     }
 
     public String toString() {
-        return "Room " + roomNumber + ": " + roomPrice + "$, " + roomType + ", " + (isFree ? "free" : "not free");
+        return "Room " + roomNumber + ": $" + roomPrice + ", " + roomType + ", " + (isFree ? "free" : "Not Free");
     }
 }

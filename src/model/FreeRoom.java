@@ -1,7 +1,16 @@
 package model;
 
 public class FreeRoom extends Room {
-    public FreeRoom(String roomNumber, RoomType roomType) {
-        super(roomNumber, 0.00, roomType);
-    }
+
+        public FreeRoom() {
+            super(0.0);
+        }
+
+        public boolean isFree() {
+            return true;
+        }
+
+        public String toString() {
+            return "Room " + this.getRoomNumber() + ": $" + this.getRoomPrice() + ", " + this.getRoomType() + ", " + (this.isFree() ? "free" : "Not Free.");
+        }
 }

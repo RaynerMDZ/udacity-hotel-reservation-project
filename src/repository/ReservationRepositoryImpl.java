@@ -7,9 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ReservationRepositoryImpl implements ReservationRepository {
+
+    private final Map<String, Reservation> reservations;
     private static ReservationRepositoryImpl instance = null;
 
     private ReservationRepositoryImpl() {
+        reservations = new HashMap<>();
     }
 
     public static ReservationRepositoryImpl getInstance() {
@@ -19,15 +22,13 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         return instance;
     }
 
-    private final Map<String, Reservation> reservations = new HashMap<>();
-
     @Override
     public Collection<Reservation> getAllReservations() {
         return reservations.values();
     }
 
     @Override
-    public Reservation getAReservation(String email) {
+    public Reservation getAReservation(String email) throws IllegalArgumentException {
         if (reservations.containsKey(email)) {
             return reservations.get(email);
         }
@@ -35,8 +36,9 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public void addReservation(Reservation reservation) {
+    public Reservation addReservation(Reservation reservation) {
         reservations.put(reservation.getCustomer().getEmail(), reservation);
+        return getAReservation(reservation.getCustomer().getEmail());
     }
 
     @Override

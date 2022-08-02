@@ -7,19 +7,19 @@ import repository.CustomerRepositoryImpl;
 import java.util.Collection;
 
 public class CustomerServiceImpl implements CustomerService {
-
+    private final CustomerRepository customerRepository;
     private static CustomerServiceImpl instance = null;
-    private CustomerServiceImpl() {
+
+    private CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     public static CustomerServiceImpl getInstance() {
         if (instance == null) {
-            instance = new CustomerServiceImpl();
+            instance = new CustomerServiceImpl(CustomerRepositoryImpl.getInstance());
         }
         return instance;
     }
-
-    private final CustomerRepository customerRepository = CustomerRepositoryImpl.getInstance();
 
     public void addCustomer(String email, String firstName, String lastName) {
         try {
