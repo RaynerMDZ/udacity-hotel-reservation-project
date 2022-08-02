@@ -31,30 +31,30 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public IRoom getRoom(String roomNumber) throws IllegalArgumentException {
+    public IRoom getRoom(final String roomNumber) throws IllegalArgumentException {
 //        this.logger.info("Getting room with number: " + roomNumber);
         return this.roomRepository.getRoom(roomNumber);
     }
 
     @Override
-    public void addRoom(IRoom room) throws IllegalArgumentException {
+    public void addRoom(final IRoom room) throws IllegalArgumentException {
 //        this.logger.info("Adding room: " + room);
         this.roomRepository.addRoom(room);
     }
 
     @Override
-    public void addRooms(Collection<IRoom> rooms) throws IllegalArgumentException {
+    public void addRooms(final Collection<IRoom> rooms) throws IllegalArgumentException {
         this.roomRepository.addRooms(rooms);
     }
 
     @Override
-    public void removeRoom(String roomNumber) throws IllegalArgumentException {
+    public void removeRoom(final String roomNumber) throws IllegalArgumentException {
 //        this.logger.info("Removing room with number: " + roomNumber);
         this.roomRepository.removeRoom(roomNumber);
     }
 
     @Override
-    public void updateRoom(IRoom room) {
+    public void updateRoom(final IRoom room) {
 //        this.logger.info("Updating room: " + room);
         this.roomRepository.updateRoom(room);
     }

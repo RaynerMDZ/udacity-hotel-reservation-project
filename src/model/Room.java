@@ -36,4 +36,19 @@ public class Room implements IRoom {
     public String toString() {
         return "Room " + roomNumber + ": $" + roomPrice + ", " + roomType + ", " + (isFree ? "free" : "Not Free");
     }
+
+    // hashCode and equals methods
+    @Override
+    public int hashCode() {
+        return roomNumber.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Room) {
+            Room other = (Room) obj;
+            return this.roomNumber.equals(other.roomNumber);
+        }
+        return false;
+    }
 }

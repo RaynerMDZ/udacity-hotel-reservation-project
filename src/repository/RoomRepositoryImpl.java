@@ -27,7 +27,7 @@ public class RoomRepositoryImpl implements RoomRepository {
     }
 
     @Override
-    public IRoom getRoom(String roomNumber) throws IllegalArgumentException {
+    public IRoom getRoom(final String roomNumber) throws IllegalArgumentException {
          return this.rooms.stream()
                  .filter(room -> room.getRoomNumber().equals(roomNumber))
                  .findFirst()
@@ -35,17 +35,17 @@ public class RoomRepositoryImpl implements RoomRepository {
     }
 
     @Override
-    public void addRoom(IRoom room) {
+    public void addRoom(final IRoom room) {
         this.rooms.add(room);
     }
 
     @Override
-    public void addRooms(Collection<IRoom> rooms) throws IllegalArgumentException {
+    public void addRooms(final Collection<IRoom> rooms) throws IllegalArgumentException {
         this.rooms.addAll(rooms);
     }
 
     @Override
-    public void removeRoom(String roomNumber) throws IllegalArgumentException {
+    public void removeRoom(final String roomNumber) throws IllegalArgumentException {
         if (roomExists(roomNumber)) {
             this.rooms.remove(getRoom(roomNumber));
         }
@@ -53,7 +53,7 @@ public class RoomRepositoryImpl implements RoomRepository {
     }
 
     @Override
-    public void updateRoom(IRoom room) throws IllegalArgumentException {
+    public void updateRoom(final IRoom room) throws IllegalArgumentException {
         if (roomExists(room.getRoomNumber())) {
             this.rooms.remove(getRoom(room.getRoomNumber()));
             this.rooms.add(room);
@@ -61,7 +61,7 @@ public class RoomRepositoryImpl implements RoomRepository {
         throw new IllegalArgumentException("Room does not exist.");
     }
 
-    private boolean roomExists(String roomNumber) {
+    private boolean roomExists(final String roomNumber) {
         return this.rooms.stream()
                 .anyMatch(room -> room.getRoomNumber().equals(roomNumber));
     }

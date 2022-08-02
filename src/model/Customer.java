@@ -2,6 +2,8 @@ package model;
 
 import util.RegexValidators;
 
+import java.util.Objects;
+
 public class Customer {
     private java.lang.String firstName;
     private java.lang.String lastName;
@@ -32,5 +34,35 @@ public class Customer {
 
     public java.lang.String toString() {
         return "First Name: " + firstName + "\nLast Name: " + lastName + "\nEmail: " + email;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.firstName != null ? this.firstName.hashCode() : 0);
+        hash = 97 * hash + (this.lastName != null ? this.lastName.hashCode() : 0);
+        hash = 97 * hash + (this.email != null ? this.email.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Customer other = (Customer) obj;
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        return true;
     }
 }

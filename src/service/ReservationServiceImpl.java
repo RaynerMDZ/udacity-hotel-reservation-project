@@ -30,31 +30,31 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void addRoom(IRoom room) {
+    public void addRoom(final IRoom room) {
 //        this.logger.info("Adding room: " + room.getRoomNumber());
         this.roomService.addRoom(room);
     }
 
     @Override
-    public IRoom getARoom(java.lang.String roomNumber) {
+    public IRoom getARoom(final String roomNumber) {
 //        this.logger.info("Getting room: " + roomNumber);
         return this.roomService.getRoom(roomNumber);
     }
 
     @Override
-    public Reservation reserveRoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {;
+    public Reservation reserveRoom(final Customer customer, final IRoom room, final Date checkInDate, final Date checkOutDate) {;
         return this.reservationRepository.addReservation(new Reservation(customer, room, checkInDate, checkOutDate));
     }
 
     @Override
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
+    public Collection<IRoom> findRooms(final Date checkInDate, final Date checkOutDate) {
 //        this.logger.info("Finding rooms");
 //        return this.roomService.findRooms(checkInDate, checkOutDate);
         return null;
     }
 
     @Override
-    public Collection<Reservation> getCustomersReservation(String email) {
+    public Collection<Reservation> getCustomersReservation(final String email) {
         return this.reservationRepository.getCustomersReservation(email);
     }
 

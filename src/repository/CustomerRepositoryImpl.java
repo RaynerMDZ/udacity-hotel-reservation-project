@@ -26,7 +26,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Customer getACustomer(java.lang.String email) throws IllegalArgumentException {
+    public Customer getACustomer(final String email) throws IllegalArgumentException {
         return this.customer.stream()
                 .filter(customer -> customer.getEmail().equals(email))
                 .findFirst()
@@ -34,7 +34,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public void addCustomer(java.lang.String email, java.lang.String firstName, java.lang.String lastName) throws IllegalArgumentException {
+    public void addCustomer(final String email, final String firstName, final String lastName) throws IllegalArgumentException {
         if (customerExists(email)) {
             throw new IllegalArgumentException("Customer already exists.");
         }
@@ -43,7 +43,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public void updateCustomer(Customer customer) throws IllegalArgumentException {
+    public void updateCustomer(final Customer customer) throws IllegalArgumentException {
         if (this.getACustomer(customer.getEmail()) == null) {
             throw new IllegalArgumentException("Customer does not exist");
         }
@@ -52,14 +52,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public void deleteCustomer(Customer customer) throws IllegalArgumentException {
+    public void deleteCustomer(final Customer customer) throws IllegalArgumentException {
         if (this.getACustomer(customer.getEmail()) == null) {
             throw new IllegalArgumentException("Customer does not exist");
         }
         this.customer.remove(customer);
     }
 
-    private boolean customerExists(java.lang.String email) {
+    private boolean customerExists(final String email) {
         return this.customer.stream()
                 .anyMatch(customer -> customer.getEmail().equals(email));
     }

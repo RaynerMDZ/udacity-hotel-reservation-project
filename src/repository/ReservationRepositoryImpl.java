@@ -30,7 +30,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Reservation getAReservation(String email) throws IllegalArgumentException {
+    public Reservation getAReservation(final String email) throws IllegalArgumentException {
         if (reservations.containsKey(email)) {
             return reservations.get(email);
         }
@@ -38,23 +38,23 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Reservation addReservation(Reservation reservation) {
+    public Reservation addReservation(final Reservation reservation) {
         reservations.put(reservation.getCustomer().getEmail(), reservation);
         return getAReservation(reservation.getCustomer().getEmail());
     }
 
     @Override
-    public void updateReservation(Reservation reservation) {
+    public void updateReservation(final Reservation reservation) {
         reservations.put(reservation.getCustomer().getEmail(), reservation);
     }
 
     @Override
-    public void deleteReservation(Reservation reservation) {
+    public void deleteReservation(final Reservation reservation) {
         reservations.remove(reservation.getCustomer().getEmail());
     }
 
     @Override
-    public Collection<Reservation> getCustomersReservation(String email) {
+    public Collection<Reservation> getCustomersReservation(final String email) {
         return reservations.values().stream()
                 .filter(reservation -> reservation.getCustomer().getEmail().equals(email))
                 .collect(Collectors.toList());
