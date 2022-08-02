@@ -15,7 +15,7 @@ public class GenerateData implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 100; i++) {
-            IRoom room = new Room("1" + i, this.getRandomDouble(80.00, 150.00), this.generateRandomRoomType());
+            IRoom room = new Room("1" + i, this.getRandomDouble(80.00, 150.00), this.generateRandomRoomType(), false);
             this.roomService.addRoom(room);
         }
     }

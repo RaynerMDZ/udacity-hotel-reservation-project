@@ -32,7 +32,7 @@ public class Reservation {
     }
 
     public java.lang.String toString() {
-        return "Reservation " + customer.getFirstName() + " " + customer.getLastName() + ": " + room.getRoomNumber() + ", " + checkInDate + " - " + checkOutDate;
+        return "Reservation info: " + customer.getFirstName() + " " + customer.getLastName() + ", Room number: " + room.getRoomNumber() + ", " + checkInDate + " - " + checkOutDate;
     }
 
     @Override

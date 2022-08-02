@@ -1,16 +1,16 @@
 package menu;
 
 import api.HotelResource;
+import model.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 public class HotelMenu {
     
     private static HotelMenu instance = null;
-    private final Scanner scanner = new Scanner(System.in);
+    private final static Scanner scanner = new Scanner(System.in);
     private boolean isRunning = true;
 
     private HotelMenu() {
@@ -29,7 +29,7 @@ public class HotelMenu {
         this.displayMainMenu();
         while (this.isRunning) {
             try {
-                Integer choice = Integer.parseInt(this.scanner.nextLine());
+                Integer choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1 -> this.findAndReserveRoom();
                     case 2 -> this.seeMyReservation();
@@ -58,23 +58,31 @@ public class HotelMenu {
     public void findAndReserveRoom() throws ParseException {
         try {
             System.out.println("Enter checkIn date mm/dd/yyyy example (12/31/2019): ");
-            String checkInDate = this.scanner.nextLine();
+            String checkInDate = scanner.nextLine();
 
             System.out.println("Enter checkOut date mm/dd/yyyy example (12/31/2019): ");
-            String checkOutDate = this.scanner.nextLine();
+            String checkOutDate = scanner.nextLine();
 
             System.out.println("Enter your email: ");
-            String email = this.scanner.nextLine();
+            String email = scanner.nextLine();
 
             System.out.println("Enter the room number: ");
-            String roomNumber = this.scanner.nextLine();
+            String roomNumber = scanner.nextLine();
 
-            var reservation = this.hotelResource.bookARoom(
-                    email,
-                    this.hotelResource.getRoom(roomNumber),
-                    new SimpleDateFormat("MM/dd/yyyy").parse(checkInDate),
-                    new SimpleDateFormat("MM/dd/yyyy").parse(checkOutDate)
-            );
+            var room = this.hotelResource.getRoom(roomNumber);
+            Reservation reservation = null;
+
+            if (room.isReserved()) {
+                throw new IllegalArgumentException("Room is already reserved.");
+            } else {
+                room.book();
+                reservation = this.hotelResource.bookARoom(
+                        email,
+                        room,
+                        new SimpleDateFormat("MM/dd/yyyy").parse(checkInDate),
+                        new SimpleDateFormat("MM/dd/yyyy").parse(checkOutDate)
+                );
+            }
 
             System.out.println();
             System.out.println("Room reserved successfully.\n");
@@ -82,11 +90,12 @@ public class HotelMenu {
             System.out.println("Your reservation is: " + reservation);
             System.out.println();
 
-            HotelMenu.getInstance().displayMainMenu();
+            HotelMenu.getInstance().mainMenu();
         } catch (Throwable t) {
+            System.out.println();
             System.out.println("Error: " + t.getMessage());
             System.out.println();
-            HotelMenu.getInstance().displayMainMenu();
+            HotelMenu.getInstance().mainMenu();
         }
     }
 
@@ -94,8 +103,9 @@ public class HotelMenu {
 
         System.out.println();
         System.out.println("Enter your email: ");
-        String email = this.scanner.nextLine();
+        String email = scanner.nextLine();
 
+        System.out.println();
         System.out.println(this.hotelResource.getCustomerReservations(email));
         System.out.println();
         HotelMenu.getInstance().mainMenu();
@@ -106,22 +116,22 @@ public class HotelMenu {
         String firstName = null, lastName = null, email = null;
         try {
             System.out.println("Enter your first name: ");
-            firstName = this.scanner.nextLine();
+            firstName = scanner.nextLine();
             System.out.println("Enter your last name: ");
-            lastName = this.scanner.nextLine();
+            lastName = scanner.nextLine();
             System.out.println("Enter your email: ");
-            email = this.scanner.nextLine();
+            email = scanner.nextLine();
 
             this.hotelResource.createACustomer(firstName, lastName, email);
             System.out.println();
             System.out.println("Account created successfully.");
             System.out.println();
-            HotelMenu.getInstance().displayMainMenu();
+            HotelMenu.getInstance().mainMenu();
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             System.out.println();
-            HotelMenu.getInstance().displayMainMenu();
+            HotelMenu.getInstance().mainMenu();
         }
     }
 

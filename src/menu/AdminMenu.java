@@ -1,7 +1,6 @@
 package menu;
 
 import api.AdminResource;
-import model.Customer;
 import model.IRoom;
 import model.Room;
 import model.RoomType;
@@ -19,8 +18,7 @@ public class AdminMenu {
     private final AdminResource adminResource = AdminResource.getInstance();
     private final CustomerService customerService = CustomerServiceImpl.getInstance();
     private final DecimalFormat decimalFormat = new DecimalFormat("###.##");
-    private final Scanner scanner = new Scanner(System.in);
-    private boolean isRunning = true;
+    private final static Scanner scanner = new Scanner(System.in);
 
 
     private static AdminMenu instance = null;
@@ -38,16 +36,16 @@ public class AdminMenu {
     public void adminMenu () {
         this.displayAdminMenu();
 
-        while (this.isRunning) {
+        while (true) {
             try {
-                Integer choice = Integer.parseInt(this.scanner.nextLine());
+                int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1 -> this.seeAllCustomers();
                     case 2 -> this.seeAllRooms();
                     case 3 -> this.seeAllReservations();
                     case 4 -> this.addRoom();
                     case 5 -> this.addTestData();
-                    case 6 -> this.backToMainMenu();
+                    case 6 -> HotelMenu.getInstance().mainMenu();
                     default -> System.out.println("Error: Invalid input. Please enter a number between 1 and 6.\n");
                 }
             } catch (NumberFormatException e) {
@@ -56,8 +54,6 @@ public class AdminMenu {
                 System.out.println("Error: " + t.getMessage());
             }
         }
-
-        HotelMenu.getInstance().mainMenu();
     }
 
     public void displayAdminMenu() {
@@ -89,7 +85,7 @@ public class AdminMenu {
         System.out.println();
         System.out.println(this.adminResource.displayAllReservations());
         System.out.println();
-        AdminMenu.getInstance().displayAdminMenu();
+        AdminMenu.getInstance().adminMenu();
     }
 
     private void addRoom() {
@@ -97,22 +93,22 @@ public class AdminMenu {
         String roomNumber, roomType, roomPrice;
         try {
             System.out.println("Enter room number: ");
-            roomNumber = this.scanner.nextLine();
+            roomNumber = scanner.nextLine();
 
             System.out.println("Enter room price: ");
-            roomPrice = this.scanner.nextLine();
+            roomPrice = scanner.nextLine();
 
             System.out.println("Enter room type with numbers: ");
             System.out.println("1. Single");
             System.out.println("2. Double");
-            roomType = this.scanner.nextLine();
+            roomType = scanner.nextLine();
 
             IRoom room;
 
             if (RoomType.SINGLE.getAction().equals(roomType)) {
-                room = new Room(roomNumber, Double.parseDouble(roomPrice), RoomType.SINGLE);
+                room = new Room(roomNumber, Double.parseDouble(roomPrice), RoomType.SINGLE, false);
             } else if (RoomType.DOUBLE.getAction().equals(roomType)) {
-                room = new Room(roomNumber, Double.parseDouble(roomPrice), RoomType.DOUBLE);
+                room = new Room(roomNumber, Double.parseDouble(roomPrice), RoomType.DOUBLE, false);
             } else {
                 throw new Exception("Invalid room type.");
             }
@@ -121,19 +117,19 @@ public class AdminMenu {
             System.out.println();
             System.out.println("Room created successfully.");
             System.out.println();
-            AdminMenu.getInstance().displayAdminMenu();
+            AdminMenu.getInstance().adminMenu();
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             System.out.println();
-            AdminMenu.getInstance().addRoom();
+            AdminMenu.getInstance().adminMenu();
         }
     }
 
     private void addTestData() {
         List<IRoom> rooms = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            IRoom room = new Room("1" + i, this.getRandomDouble(80.00, 150.00), this.generateRandomRoomType());
+            IRoom room = new Room("1" + i, this.getRandomDouble(80.00, 150.00), this.generateRandomRoomType(), false);
             rooms.add(room);
         }
         this.adminResource.addRooms(rooms);
@@ -143,11 +139,7 @@ public class AdminMenu {
         System.out.println();
         System.out.println("Test data added successfully.");
         System.out.println();
-        AdminMenu.getInstance().displayAdminMenu();
-    }
-
-    private void backToMainMenu() {
-        this.isRunning = false;
+        AdminMenu.getInstance().adminMenu();
     }
 
     private Double getRandomDouble(final Double min, final Double max) {

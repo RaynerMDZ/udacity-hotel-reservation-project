@@ -17,7 +17,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final RoomService roomService;
     private static ReservationServiceImpl instance = null;
 
-    private ReservationServiceImpl(ReservationRepository reservationRepository, RoomService roomService) {
+    ReservationServiceImpl(ReservationRepository reservationRepository, RoomService roomService) {
         this.reservationRepository = reservationRepository;
         this.roomService = roomService;
     }
