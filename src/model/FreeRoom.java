@@ -1,7 +1,4 @@
-package freeroom;
-
-import room.Room;
-import room.RoomType;
+package model;
 
 public class FreeRoom extends Room {
     public FreeRoom(String roomNumber, RoomType roomType) {

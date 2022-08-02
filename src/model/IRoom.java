@@ -1,4 +1,4 @@
-package room;
+package model;
 
 public interface IRoom {
     public String getRoomNumber();
