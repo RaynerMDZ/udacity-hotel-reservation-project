@@ -1,10 +1,12 @@
 package repository;
 
+import model.Customer;
 import model.Reservation;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ReservationRepositoryImpl implements ReservationRepository {
 
@@ -49,5 +51,12 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     @Override
     public void deleteReservation(Reservation reservation) {
         reservations.remove(reservation.getCustomer().getEmail());
+    }
+
+    @Override
+    public Collection<Reservation> getCustomersReservation(String email) {
+        return reservations.values().stream()
+                .filter(reservation -> reservation.getCustomer().getEmail().equals(email))
+                .collect(Collectors.toList());
     }
 }

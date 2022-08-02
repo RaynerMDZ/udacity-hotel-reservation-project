@@ -5,8 +5,10 @@ import repository.CustomerRepository;
 import repository.CustomerRepositoryImpl;
 
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class CustomerServiceImpl implements CustomerService {
+    private final Logger logger = Logger.getLogger(CustomerServiceImpl.class.getName());
     private final CustomerRepository customerRepository;
     private static CustomerServiceImpl instance = null;
 
@@ -21,23 +23,17 @@ public class CustomerServiceImpl implements CustomerService {
         return instance;
     }
 
-    public void addCustomer(String email, String firstName, String lastName) {
-        try {
-            this.customerRepository.addCustomer(email, firstName, lastName);
-        } catch (IllegalArgumentException e) {
-            e.getLocalizedMessage();
-        }
+    public void addCustomer(java.lang.String email, java.lang.String firstName, java.lang.String lastName) {
+//        this.logger.info("Adding customer: " + email);
+        this.customerRepository.addCustomer(email, firstName, lastName);
     }
-    public Customer getCustomer(String email) {
-        try {
-            return this.customerRepository.getACustomer(email);
-        } catch (IllegalArgumentException e) {
-            e.getLocalizedMessage();
-        }
-        return null;
+    public Customer getCustomer(java.lang.String email) {
+//        this.logger.info("Getting customer: " + email);
+        return this.customerRepository.getACustomer(email);
     }
 
     public Collection<Customer> getAllCustomers() {
+//        this.logger.info("Getting all customers");
         return this.customerRepository.getAllCustomers();
     }
 }

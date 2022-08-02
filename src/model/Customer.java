@@ -3,11 +3,11 @@ package model;
 import util.RegexValidators;
 
 public class Customer {
-    private String firstName;
-    private String lastName;
-    private String email;
+    private java.lang.String firstName;
+    private java.lang.String lastName;
+    private java.lang.String email;
 
-    public Customer(String firstName, String lastName, String email) {
+    public Customer(java.lang.String firstName, java.lang.String lastName, java.lang.String email) {
         if (RegexValidators.validateEmail(email)) {
             this.email = email;
         } else {
@@ -18,19 +18,19 @@ public class Customer {
 
     }
 
-    public String getFirstName() {
+    public java.lang.String getFirstName() {
         return firstName;
     }
 
-    public String getLastName() {
+    public java.lang.String getLastName() {
         return lastName;
     }
 
-    public String getEmail() {
+    public java.lang.String getEmail() {
         return email;
     }
 
-    public String toString() {
+    public java.lang.String toString() {
         return "First Name: " + firstName + "\nLast Name: " + lastName + "\nEmail: " + email;
     }
 }

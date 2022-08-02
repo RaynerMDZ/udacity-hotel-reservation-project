@@ -36,9 +36,12 @@ public class RoomRepositoryImpl implements RoomRepository {
 
     @Override
     public void addRoom(IRoom room) {
-        System.out.println("Room repository add room");
         this.rooms.add(room);
-        System.out.println(this.rooms.size());
+    }
+
+    @Override
+    public void addRooms(Collection<IRoom> rooms) throws IllegalArgumentException {
+        this.rooms.addAll(rooms);
     }
 
     @Override

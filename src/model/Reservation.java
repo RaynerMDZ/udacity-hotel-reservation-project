@@ -31,7 +31,7 @@ public class Reservation {
         return checkOutDate;
     }
 
-    public String toString() {
+    public java.lang.String toString() {
         return "Reservation " + customer.getFirstName() + " " + customer.getLastName() + ": " + room.getRoomNumber() + ", " + checkInDate + " - " + checkOutDate;
     }
 }

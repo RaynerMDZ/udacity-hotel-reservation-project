@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 public class ReservationServiceImpl implements ReservationService {
+
     private final Logger logger = Logger.getLogger(ReservationServiceImpl.class.getName());
     private final ReservationRepository reservationRepository;
     private final RoomService roomService;
@@ -30,37 +31,36 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void addRoom(IRoom room) {
-        this.logger.info("Adding room: " + room.getRoomNumber());
+//        this.logger.info("Adding room: " + room.getRoomNumber());
         this.roomService.addRoom(room);
     }
 
     @Override
-    public IRoom getARoom(String roomNumber) {
-        this.logger.info("Getting room: " + roomNumber);
+    public IRoom getARoom(java.lang.String roomNumber) {
+//        this.logger.info("Getting room: " + roomNumber);
         return this.roomService.getRoom(roomNumber);
     }
 
     @Override
-    public Reservation reserveRoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
-        this.logger.info("Reserving room: " + room.getRoomNumber());
+    public Reservation reserveRoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {;
         return this.reservationRepository.addReservation(new Reservation(customer, room, checkInDate, checkOutDate));
     }
 
     @Override
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        this.logger.info("Finding rooms");
-        return this.roomService.findRooms(checkInDate, checkOutDate);
+//        this.logger.info("Finding rooms");
+//        return this.roomService.findRooms(checkInDate, checkOutDate);
+        return null;
     }
 
     @Override
-    public Collection<Reservation> getCustomersReservation(Customer customer) {
-        this.logger.info("Getting customers reservation");
-        return this.reservationRepository.getCustomersReservation(customer);
+    public Collection<Reservation> getCustomersReservation(String email) {
+        return this.reservationRepository.getCustomersReservation(email);
     }
 
     @Override
     public Collection<Reservation> printAllReservations() {
-        this.logger.info("Printing all reservations");
+//        this.logger.info("Printing all reservations");
         return this.reservationRepository.getAllReservations();
     }
 }

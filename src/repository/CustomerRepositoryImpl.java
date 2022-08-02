@@ -26,7 +26,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Customer getACustomer(String email) throws IllegalArgumentException {
+    public Customer getACustomer(java.lang.String email) throws IllegalArgumentException {
         return this.customer.stream()
                 .filter(customer -> customer.getEmail().equals(email))
                 .findFirst()
@@ -34,7 +34,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public void addCustomer(String email, String firstName, String lastName) throws IllegalArgumentException {
+    public void addCustomer(java.lang.String email, java.lang.String firstName, java.lang.String lastName) throws IllegalArgumentException {
         if (customerExists(email)) {
             throw new IllegalArgumentException("Customer already exists.");
         }
@@ -59,7 +59,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         this.customer.remove(customer);
     }
 
-    private boolean customerExists(String email) {
+    private boolean customerExists(java.lang.String email) {
         return this.customer.stream()
                 .anyMatch(customer -> customer.getEmail().equals(email));
     }
