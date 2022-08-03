@@ -28,7 +28,7 @@ public class AdminResource {
         return instance;
     }
 
-    public Customer getCustomer(java.lang.String email) {
+    public Customer getCustomer(String email) {
         return null;
     }
 
@@ -51,5 +51,6 @@ public class AdminResource {
     public Collection<Reservation> displayAllReservations() {
         return this.reservationService.printAllReservations();
     }
+
 
 }

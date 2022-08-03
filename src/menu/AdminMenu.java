@@ -4,22 +4,15 @@ import api.AdminResource;
 import model.IRoom;
 import model.Room;
 import model.RoomType;
-import service.CustomerService;
-import service.CustomerServiceImpl;
+import util.DataGenerator;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.crypto.Data;
 import java.util.Scanner;
-
 
 public class AdminMenu {
 
     private final AdminResource adminResource = AdminResource.getInstance();
-    private final CustomerService customerService = CustomerServiceImpl.getInstance();
-    private final DecimalFormat decimalFormat = new DecimalFormat("###.##");
     private final static Scanner scanner = new Scanner(System.in);
-
 
     private static AdminMenu instance = null;
 
@@ -126,31 +119,10 @@ public class AdminMenu {
         }
     }
 
-    private void addTestData() {
-        List<IRoom> rooms = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            IRoom room = new Room("1" + i, this.getRandomDouble(80.00, 150.00), this.generateRandomRoomType(), false);
-            rooms.add(room);
-        }
-        this.adminResource.addRooms(rooms);
-
-        this.customerService.addCustomer("rayner", "mendez", "rayner@gmail.com");
-
-        System.out.println();
-        System.out.println("Test data added successfully.");
-        System.out.println();
+    public void addTestData() {
+        DataGenerator.generateCustomer();
+        DataGenerator.generateRooms();
+        DataGenerator.generateReservation();
         AdminMenu.getInstance().adminMenu();
-    }
-
-    private Double getRandomDouble(final Double min, final Double max) {
-        return Double.parseDouble(decimalFormat.format(min + (Math.random() * (max - min))));
-    }
-
-    private RoomType generateRandomRoomType() {
-        int random = (int) (Math.random() * 2);
-        return switch (random) {
-            case 0 -> RoomType.SINGLE;
-            default -> RoomType.DOUBLE;
-        };
     }
 }

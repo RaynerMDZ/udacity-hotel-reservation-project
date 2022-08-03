@@ -24,16 +24,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public void addCustomer(final String email, final String firstName, final String lastName) {
-//        this.logger.info("Adding customer: " + email);
         this.customerRepository.addCustomer(email, firstName, lastName);
     }
     public Customer getCustomer(final String email) {
-//        this.logger.info("Getting customer: " + email);
         return this.customerRepository.getACustomer(email);
     }
 
     public Collection<Customer> getAllCustomers() {
-//        this.logger.info("Getting all customers");
         return this.customerRepository.getAllCustomers();
     }
 }

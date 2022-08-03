@@ -51,7 +51,7 @@ public class HotelResource {
     }
 
     public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) {
-        return null;
+        return this.reservationService.findRooms(checkInDate, checkOutDate);
     }
 
 }

@@ -9,6 +9,7 @@ import repository.ReservationRepositoryImpl;
 import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class ReservationServiceImpl implements ReservationService {
 
@@ -31,13 +32,11 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void addRoom(final IRoom room) {
-//        this.logger.info("Adding room: " + room.getRoomNumber());
         this.roomService.addRoom(room);
     }
 
     @Override
     public IRoom getARoom(final String roomNumber) {
-//        this.logger.info("Getting room: " + roomNumber);
         return this.roomService.getRoom(roomNumber);
     }
 
@@ -48,9 +47,15 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Collection<IRoom> findRooms(final Date checkInDate, final Date checkOutDate) {
-//        this.logger.info("Finding rooms");
-//        return this.roomService.findRooms(checkInDate, checkOutDate);
-        return null;
+        Collection<Reservation> reservations = this.reservationRepository.getAllReservations();
+        Collection<IRoom> rooms = this.roomService.getAllRooms();
+        Collection<IRoom> availableRooms = rooms.stream()
+                .filter(room -> !reservations.stream()
+                        .anyMatch(reservation -> reservation.getRoom().getRoomNumber().equals(room.getRoomNumber())
+                                && reservation.getCheckInDate().before(checkOutDate) && reservation.getCheckOutDate().after(checkInDate)))
+                .collect(Collectors.toList());
+        return availableRooms;
+
     }
 
     @Override
@@ -60,7 +65,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Collection<Reservation> printAllReservations() {
-//        this.logger.info("Printing all reservations");
         return this.reservationRepository.getAllReservations();
     }
 }

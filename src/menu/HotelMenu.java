@@ -66,6 +66,10 @@ public class HotelMenu {
             System.out.println("Enter your email: ");
             String email = scanner.nextLine();
 
+            System.out.println();
+            this.hotelResource.findARoom(new SimpleDateFormat("MM/dd/yyyy").parse(checkInDate), new SimpleDateFormat("MM/dd/yyyy").parse(checkOutDate)).forEach(System.out::println);
+            System.out.println();
+
             System.out.println("Enter the room number: ");
             String roomNumber = scanner.nextLine();
 
