@@ -100,7 +100,7 @@ public class HotelMenu {
                     System.out.println("Enter the room number: ");
                     roomNumber = scanner.nextLine();
                     room = this.hotelResource.getRoom(roomNumber);
-                    reservations = this.hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
+                    reservations = this.hotelResource.bookARoom(email, room, checkInDateNextWeek, checkOutDateNextWeek);
                 }
 
                 System.out.println();

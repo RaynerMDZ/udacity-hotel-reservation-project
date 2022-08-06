@@ -48,7 +48,7 @@ public class DataGenerator {
         Date checkOutDate = null;
         try {
             checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse("02/01/2023");
-            checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse("02/20/2023");
+            checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse("02/07/2023");
         } catch (ParseException e) {
             e.printStackTrace();
         }
