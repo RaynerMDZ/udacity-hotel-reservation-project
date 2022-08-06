@@ -3,7 +3,9 @@ package menu;
 import api.HotelResource;
 import model.Reservation;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -76,7 +78,7 @@ public class HotelMenu {
             String roomNumber = scanner.nextLine();
 
             var room = this.hotelResource.getRoom(roomNumber);
-            Reservation reservation = null;
+            Collection<Reservation> reservations = null;
 
             if (room.isReserved()) {
                 System.out.println("Room is already reserved.");
@@ -94,21 +96,42 @@ public class HotelMenu {
                     System.out.println();
                     this.hotelResource.checkRoomsForNextWeek(checkInDate, checkOutDate).forEach(System.out::println);
                     System.out.println();
+
+                    System.out.println("Enter the room number: ");
+                    roomNumber = scanner.nextLine();
+                    room = this.hotelResource.getRoom(roomNumber);
+                    reservations = this.hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
                 }
+
+                System.out.println();
+                System.out.println("Room reserved successfully.\n");
+                System.out.println();
+                System.out.println("Your reservations are:");
+                assert reservations != null;
+                reservations.forEach(System.out::println);
+                System.out.println();
 
                 HotelMenu.getInstance().mainMenu();
             } else {
                 room.book();
-                reservation = this.hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
+                reservations = this.hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
             }
 
             System.out.println();
             System.out.println("Room reserved successfully.\n");
             System.out.println();
-            System.out.println("Your reservation is: " + reservation);
+            System.out.println("Your reservations are:");
+            assert reservations != null;
+            reservations.forEach(System.out::println);
             System.out.println();
 
             HotelMenu.getInstance().mainMenu();
+        } catch (ParseException e) {
+            System.out.println();
+            System.out.println("Error: Invalid date format. Please use mm/dd/yyyy. Numbers only.");
+            System.out.println();
+            HotelMenu.getInstance().mainMenu();
+
         } catch (Throwable t) {
             System.out.println();
             System.out.println("Error: " + t.getMessage());

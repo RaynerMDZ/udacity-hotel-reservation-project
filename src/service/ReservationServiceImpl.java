@@ -41,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation reserveRoom(final Customer customer, final IRoom room, final Date checkInDate, final Date checkOutDate) {
+    public Collection<Reservation> reserveRoom(final Customer customer, final IRoom room, final Date checkInDate, final Date checkOutDate) {
         if (checkInDate.before(new Date())) {
             throw new IllegalArgumentException("CheckIn date cannot be in the past.");
         }

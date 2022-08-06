@@ -53,6 +53,7 @@ public class DataGenerator {
             e.printStackTrace();
         }
         final IRoom room = adminResource.getAllRooms().iterator().next();
+        room.book();
 
         reservationService.reserveRoom(customerService.getCustomer("rayner@gmail.com"), room, checkInDate, checkOutDate);
 

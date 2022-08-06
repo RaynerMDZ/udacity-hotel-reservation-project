@@ -3,6 +3,7 @@ package repository;
 import model.Customer;
 import model.Reservation;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ReservationRepositoryImpl implements ReservationRepository {
 
-    private final Map<String, Reservation> reservations;
+    private final Map<String, Collection<Reservation>> reservations;
     private static ReservationRepositoryImpl instance = null;
 
     private ReservationRepositoryImpl() {
@@ -26,11 +27,11 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Collection<Reservation> getAllReservations() {
-        return reservations.values();
+        return reservations.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     @Override
-    public Reservation getAReservation(final String email) throws IllegalArgumentException {
+    public Collection<Reservation> getAReservation(final String email) throws IllegalArgumentException {
         if (reservations.containsKey(email)) {
             return reservations.get(email);
         }
@@ -38,14 +39,23 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Reservation addReservation(final Reservation reservation) {
-        reservations.put(reservation.getCustomer().getEmail(), reservation);
-        return getAReservation(reservation.getCustomer().getEmail());
+    public Collection<Reservation> addReservation(final Reservation reservation) {
+        if (reservations.containsKey(reservation.getCustomer().getEmail())) {
+            reservations.get(reservation.getCustomer().getEmail()).add(reservation);
+        } else {
+            Collection<Reservation> newReservations = new ArrayList<>();
+            newReservations.add(reservation);
+            reservations.put(reservation.getCustomer().getEmail(), newReservations);
+        }
+        return reservations.get(reservation.getCustomer().getEmail());
     }
 
     @Override
     public void updateReservation(final Reservation reservation) {
-        reservations.put(reservation.getCustomer().getEmail(), reservation);
+        if (reservations.containsKey(reservation.getCustomer().getEmail())) {
+            reservations.get(reservation.getCustomer().getEmail()).remove(reservation);
+            reservations.get(reservation.getCustomer().getEmail()).add(reservation);
+        }
     }
 
     @Override
@@ -55,8 +65,6 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Collection<Reservation> getCustomersReservation(final String email) {
-        return reservations.values().stream()
-                .filter(reservation -> reservation.getCustomer().getEmail().equals(email))
-                .collect(Collectors.toList());
+        return reservations.get(email);
     }
 }
