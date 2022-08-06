@@ -30,7 +30,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         return this.customer.stream()
                 .filter(customer -> customer.getEmail().equals(email))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Customer does not exist. Create an account first."));
     }
 
     @Override

@@ -42,7 +42,11 @@ public class HotelResource {
     }
 
     public Collection<Reservation> bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
-        return this.reservationService.reserveRoom(this.customerService.getCustomer(customerEmail), room, checkInDate, checkOutDate);
+        var customer = this.customerService.getCustomer(customerEmail);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer does not exist. Create an account first.");
+        }
+        return this.reservationService.reserveRoom(customer, room, checkInDate, checkOutDate);
     }
 
     public Collection<Reservation> getCustomerReservations(String email) {

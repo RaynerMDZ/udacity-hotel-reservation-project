@@ -1,6 +1,5 @@
 package repository;
 
-import model.Customer;
 import model.Reservation;
 
 import java.util.ArrayList;

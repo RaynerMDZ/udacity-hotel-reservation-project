@@ -1,6 +1,7 @@
 package menu;
 
 import api.HotelResource;
+import model.IRoom;
 import model.Reservation;
 
 import java.text.ParseException;
@@ -70,8 +71,19 @@ public class HotelMenu {
             System.out.println("Enter your email: ");
             String email = scanner.nextLine();
 
+            if (hotelResource.getCustomer(email) == null) {
+                throw new IllegalArgumentException("Customer does not exist. Create an account first.");
+            }
+
             System.out.println();
-            this.hotelResource.findARoom(checkInDate, checkOutDate).forEach(System.out::println);
+            Collection<IRoom> rooms = hotelResource.findARoom(checkInDate, checkOutDate);
+
+            if (rooms.isEmpty()) {
+                throw new IllegalArgumentException("No rooms available for the given dates.");
+            } else {
+                rooms.forEach(System.out::println);
+            }
+
             System.out.println();
 
             System.out.println("Enter the room number: ");
@@ -94,7 +106,12 @@ public class HotelMenu {
                     System.out.println();
                     System.out.println("Rooms available the week of " + new SimpleDateFormat("MM/dd/yyyy").format(checkInDateNextWeek) + " to " + new SimpleDateFormat("MM/dd/yyyy").format(checkOutDateNextWeek));
                     System.out.println();
-                    this.hotelResource.checkRoomsForNextWeek(checkInDate, checkOutDate).forEach(System.out::println);
+                    rooms = hotelResource.checkRoomsForNextWeek(checkInDateNextWeek, checkOutDateNextWeek);
+                    if (rooms.isEmpty()) {
+                        throw new IllegalArgumentException("No rooms available for the given dates.");
+                    } else {
+                        rooms.forEach(System.out::println);
+                    }
                     System.out.println();
 
                     System.out.println("Enter the room number: ");
