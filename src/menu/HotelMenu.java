@@ -3,8 +3,8 @@ package menu;
 import api.HotelResource;
 import model.Reservation;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class HotelMenu {
@@ -29,7 +29,7 @@ public class HotelMenu {
         this.displayMainMenu();
         while (this.isRunning) {
             try {
-                Integer choice = Integer.parseInt(scanner.nextLine());
+                int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1 -> this.findAndReserveRoom();
                     case 2 -> this.seeMyReservation();
@@ -55,19 +55,21 @@ public class HotelMenu {
         System.out.println("5. Exit.");
     }
 
-    public void findAndReserveRoom() throws ParseException {
+    public void findAndReserveRoom() {
         try {
-            System.out.println("Enter checkIn date mm/dd/yyyy example (12/31/2019): ");
-            String checkInDate = scanner.nextLine();
+            System.out.println("Enter checkIn date mm/dd/yyyy example (12/31/2022): ");
+            String checkIn = scanner.nextLine();
+            Date checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse(checkIn);
 
-            System.out.println("Enter checkOut date mm/dd/yyyy example (12/31/2019): ");
-            String checkOutDate = scanner.nextLine();
+            System.out.println("Enter checkOut date mm/dd/yyyy example (12/31/2022): ");
+            String checkOut = scanner.nextLine();
+            Date checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse(checkOut);
 
             System.out.println("Enter your email: ");
             String email = scanner.nextLine();
 
             System.out.println();
-            this.hotelResource.findARoom(new SimpleDateFormat("MM/dd/yyyy").parse(checkInDate), new SimpleDateFormat("MM/dd/yyyy").parse(checkOutDate)).forEach(System.out::println);
+            this.hotelResource.findARoom(checkInDate, checkOutDate).forEach(System.out::println);
             System.out.println();
 
             System.out.println("Enter the room number: ");
@@ -77,15 +79,27 @@ public class HotelMenu {
             Reservation reservation = null;
 
             if (room.isReserved()) {
-                throw new IllegalArgumentException("Room is already reserved.");
+                System.out.println("Room is already reserved.");
+                System.out.println();
+                System.out.println("Would you like to check next week (y/n)");
+                String answer = scanner.nextLine();
+
+                if (answer.equalsIgnoreCase("y")) {
+
+                    Date checkInDateNextWeek = new Date(checkInDate.getTime() + 604800000);
+                    Date checkOutDateNextWeek = new Date(checkOutDate.getTime() + 604800000);
+
+                    System.out.println();
+                    System.out.println("Rooms available the week of " + new SimpleDateFormat("MM/dd/yyyy").format(checkInDateNextWeek) + " to " + new SimpleDateFormat("MM/dd/yyyy").format(checkOutDateNextWeek));
+                    System.out.println();
+                    this.hotelResource.checkRoomsForNextWeek(checkInDate, checkOutDate).forEach(System.out::println);
+                    System.out.println();
+                }
+
+                HotelMenu.getInstance().mainMenu();
             } else {
                 room.book();
-                reservation = this.hotelResource.bookARoom(
-                        email,
-                        room,
-                        new SimpleDateFormat("MM/dd/yyyy").parse(checkInDate),
-                        new SimpleDateFormat("MM/dd/yyyy").parse(checkOutDate)
-                );
+                reservation = this.hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
             }
 
             System.out.println();

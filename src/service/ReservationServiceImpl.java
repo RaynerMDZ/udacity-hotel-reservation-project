@@ -41,12 +41,28 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation reserveRoom(final Customer customer, final IRoom room, final Date checkInDate, final Date checkOutDate) {;
+    public Reservation reserveRoom(final Customer customer, final IRoom room, final Date checkInDate, final Date checkOutDate) {
+        if (checkInDate.before(new Date())) {
+            throw new IllegalArgumentException("CheckIn date cannot be in the past.");
+        }
+
+        if (checkInDate.after(checkOutDate)) {
+            throw new IllegalArgumentException("CheckIn date cannot be after check out date.");
+        }
+
         return this.reservationRepository.addReservation(new Reservation(customer, room, checkInDate, checkOutDate));
     }
 
     @Override
     public Collection<IRoom> findRooms(final Date checkInDate, final Date checkOutDate) {
+        if (checkInDate.before(new Date())) {
+            throw new IllegalArgumentException("CheckIn date cannot be in the past.");
+        }
+
+        if (checkInDate.after(checkOutDate)) {
+            throw new IllegalArgumentException("CheckIn date cannot be after check out date.");
+        }
+
         Collection<Reservation> reservations = this.reservationRepository.getAllReservations();
         Collection<IRoom> rooms = this.roomService.getAllRooms();
         Collection<IRoom> availableRooms = rooms.stream()
@@ -56,6 +72,22 @@ public class ReservationServiceImpl implements ReservationService {
                 .collect(Collectors.toList());
         return availableRooms;
 
+    }
+
+    @Override
+    public Collection<IRoom> findRoomsForNextWeek(Date checkInDate, Date checkOutDate) {
+
+        if (checkInDate.before(new Date())) {
+            throw new IllegalArgumentException("CheckIn date cannot be in the past.");
+        }
+
+        if (checkInDate.after(checkOutDate)) {
+            throw new IllegalArgumentException("CheckIn date cannot be after check out date.");
+        }
+
+        Date checkInDateNextWeek = new Date(checkInDate.getTime() + 604800000);
+        Date checkOutDateNextWeek = new Date(checkOutDate.getTime() + 604800000);
+        return this.findRooms(checkInDateNextWeek, checkOutDateNextWeek);
     }
 
     @Override

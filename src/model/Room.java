@@ -55,7 +55,7 @@ public class Room implements IRoom {
     }
 
     public String toString() {
-        return "Room " + this.roomNumber + ": $" + this.roomPrice + ", " + this.roomType + ", " + (this.isFree ? "free" : "Not Free" + ", " + (this.isReserved ? "reserved" : "Not Reserved"));
+        return "Room " + this.roomNumber + ": $" + this.roomPrice + ", " + this.roomType + ", " + (this.isFree ? "free" : "Not Free");
     }
 
     @Override

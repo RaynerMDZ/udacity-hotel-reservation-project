@@ -54,4 +54,8 @@ public class HotelResource {
         return this.reservationService.findRooms(checkInDate, checkOutDate);
     }
 
+    public Collection<IRoom> checkRoomsForNextWeek(Date checkInDate, Date checkOutDate) {
+        return this.reservationService.findRoomsForNextWeek(checkInDate, checkOutDate);
+    }
+
 }
