@@ -60,16 +60,9 @@ public class HotelMenu {
 
     public void findAndReserveRoom() {
         try {
-            System.out.println("Enter checkIn date mm/dd/yyyy example (12/31/2022): ");
-            String checkIn = scanner.nextLine();
-            Date checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse(checkIn);
-
-            System.out.println("Enter checkOut date mm/dd/yyyy example (12/31/2022): ");
-            String checkOut = scanner.nextLine();
-            Date checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse(checkOut);
-
-            System.out.println("Enter your email: ");
-            String email = scanner.nextLine();
+            Date checkInDate = getCheckInDate();
+            Date checkOutDate = getCheckOutDate();
+            String email = getEmail();
 
             if (hotelResource.getCustomer(email) == null) {
                 throw new IllegalArgumentException("Customer does not exist. Create an account first.");
@@ -91,7 +84,7 @@ public class HotelMenu {
                     rooms = hotelResource.checkRoomsForNextWeek(checkInDateNextWeek, checkOutDateNextWeek);
 
                     if (rooms.isEmpty()) {
-                        throw new IllegalArgumentException("No rooms available for next week");
+                        throw new IllegalArgumentException("No rooms available for next week.");
                     } else {
                         System.out.println();
                         System.out.println("Rooms available the week of " + new SimpleDateFormat("MM/dd/yyyy").format(checkInDateNextWeek) + " to " + new SimpleDateFormat("MM/dd/yyyy").format(checkOutDateNextWeek));
@@ -177,11 +170,30 @@ public class HotelMenu {
         }
     }
 
+    private static Date getCheckOutDate() throws ParseException {
+        System.out.println("Enter checkOut date mm/dd/yyyy example (12/31/2022): ");
+        String checkOut = scanner.nextLine();
+        Date checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse(checkOut);
+        return checkOutDate;
+    }
+
+    private static Date getCheckInDate() throws ParseException {
+        System.out.println("Enter checkIn date mm/dd/yyyy example (12/31/2022): ");
+        String checkIn = scanner.nextLine();
+        Date checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse(checkIn);
+        return checkInDate;
+    }
+
+    private static String getEmail() {
+        System.out.println("Enter your email: ");
+        String email = scanner.nextLine();
+        return email;
+    }
+
     public void seeMyReservation() {
 
         System.out.println();
-        System.out.println("Enter your email: ");
-        String email = scanner.nextLine();
+        String email = getEmail();
 
         System.out.println();
         System.out.println(this.hotelResource.getCustomerReservations(email));
