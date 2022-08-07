@@ -79,12 +79,32 @@ public class HotelMenu {
             Collection<IRoom> rooms = hotelResource.findARoom(checkInDate, checkOutDate);
 
             if (rooms.isEmpty()) {
-                throw new IllegalArgumentException("No rooms available for the given dates.");
+                System.out.println("No rooms available for the given dates.");
+                System.out.println();
+                System.out.println("Would you like to check next week (y/n)");
+                String answer = scanner.nextLine();
+
+                if (answer.equalsIgnoreCase("y")) {
+
+                    Date checkInDateNextWeek = new Date(checkInDate.getTime() + 604800000);
+                    Date checkOutDateNextWeek = new Date(checkOutDate.getTime() + 604800000);
+                    rooms = hotelResource.checkRoomsForNextWeek(checkInDateNextWeek, checkOutDateNextWeek);
+
+                    if (rooms.isEmpty()) {
+                        throw new IllegalArgumentException("No rooms available for next week");
+                    } else {
+                        System.out.println();
+                        System.out.println("Rooms available the week of " + new SimpleDateFormat("MM/dd/yyyy").format(checkInDateNextWeek) + " to " + new SimpleDateFormat("MM/dd/yyyy").format(checkOutDateNextWeek));
+                        System.out.println();
+                        rooms.forEach(System.out::println);
+                        System.out.println();
+                    }
+                }
+
             } else {
                 rooms.forEach(System.out::println);
+                    System.out.println();
             }
-
-            System.out.println();
 
             System.out.println("Enter the room number: ");
             String roomNumber = scanner.nextLine();
