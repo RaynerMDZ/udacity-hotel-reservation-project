@@ -1,9 +1,14 @@
 package api;
 
-import model.Customer;
-import model.IRoom;
-import model.Reservation;
-import service.*;
+import customer.CustomerService;
+import customer.CustomerServiceImpl;
+import customer.Customer;
+import room.IRoom;
+import resevation.Reservation;
+import resevation.ReservationService;
+import resevation.ReservationServiceImpl;
+import room.RoomService;
+import room.RoomServiceImpl;
 
 import java.util.Collection;
 import java.util.List;

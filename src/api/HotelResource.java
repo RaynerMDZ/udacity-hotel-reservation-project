@@ -1,12 +1,13 @@
 package api;
 
-import model.Customer;
-import model.IRoom;
-import model.Reservation;
-import service.CustomerService;
-import service.CustomerServiceImpl;
-import service.ReservationService;
-import service.ReservationServiceImpl;
+import customer.Customer;
+import room.IRoom;
+import resevation.Reservation;
+import customer.CustomerService;
+import customer.CustomerServiceImpl;
+import resevation.ReservationService;
+import resevation.ReservationServiceImpl;
+import util.RegexValidators;
 
 import java.util.Collection;
 import java.util.Date;
@@ -34,7 +35,7 @@ public class HotelResource {
     }
 
     public void createACustomer(String email, String firstName, String lastName) {
-        this.customerService.addCustomer(email, firstName, lastName);
+        this.customerService.createCustomer(email, firstName, lastName);
     }
 
     public IRoom getRoom(String roomNumber) {

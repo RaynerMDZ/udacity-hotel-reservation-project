@@ -1,7 +1,7 @@
 import api.AdminResource;
 import api.HotelResource;
-import service.ReservationService;
-import service.ReservationServiceImpl;
+import resevation.ReservationService;
+import resevation.ReservationServiceImpl;
 import util.DataGenerator;
 
 import java.text.ParseException;

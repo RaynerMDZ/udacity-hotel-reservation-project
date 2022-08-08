@@ -1,12 +1,11 @@
 package menu;
 
 import api.AdminResource;
-import model.IRoom;
-import model.Room;
-import model.RoomType;
+import room.IRoom;
+import room.Room;
+import room.RoomType;
 import util.DataGenerator;
 
-import javax.xml.crypto.Data;
 import java.util.Scanner;
 
 public class AdminMenu {

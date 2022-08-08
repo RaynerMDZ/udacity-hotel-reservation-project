@@ -1,8 +1,8 @@
 package menu;
 
 import api.HotelResource;
-import model.IRoom;
-import model.Reservation;
+import room.IRoom;
+import resevation.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

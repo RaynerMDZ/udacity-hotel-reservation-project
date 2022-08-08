@@ -1,13 +1,13 @@
 package util;
 
 import api.AdminResource;
-import model.IRoom;
-import model.Room;
-import model.RoomType;
-import service.CustomerService;
-import service.CustomerServiceImpl;
-import service.ReservationService;
-import service.ReservationServiceImpl;
+import room.IRoom;
+import room.Room;
+import room.RoomType;
+import customer.CustomerService;
+import customer.CustomerServiceImpl;
+import resevation.ReservationService;
+import resevation.ReservationServiceImpl;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -36,7 +36,7 @@ public class DataGenerator {
     }
 
     public static void generateCustomer() {
-        customerService.addCustomer("rayner", "mendez", "rayner@gmail.com");
+        customerService.createCustomer("rayner", "mendez", "rayner@gmail.com");
 
         System.out.println();
         System.out.println("Customer added successfully.");
