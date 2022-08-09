@@ -14,8 +14,7 @@ import java.util.Date;
  * @since 1.0
  */
 public interface ReservationService {
-    public void addRoom(IRoom room);
-    public IRoom getARoom(java.lang.String roomNumber);
+    public IRoom getARoom(String roomNumber);
     public Collection<Reservation> reserveRoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate);
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate);
     public Collection<IRoom> findRoomsForNextWeek(Date checkInDate, Date checkOutDate);

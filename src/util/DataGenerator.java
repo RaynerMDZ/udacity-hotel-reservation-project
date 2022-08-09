@@ -68,9 +68,6 @@ public class DataGenerator {
 
     private static RoomType generateRandomRoomType() {
         int random = (int) (Math.random() * 2);
-        return switch (random) {
-            case 0 -> RoomType.SINGLE;
-            default -> RoomType.DOUBLE;
-        };
+        return random == 0 ? RoomType.SINGLE : RoomType.DOUBLE;
     }
 }

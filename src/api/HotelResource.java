@@ -30,7 +30,12 @@ public class HotelResource {
     }
 
     public Customer getCustomer(String email) {
-        return this.customerService.getCustomer(email);
+        try {
+            return customerService.getCustomer(email);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void createACustomer(String email, String firstName, String lastName) {

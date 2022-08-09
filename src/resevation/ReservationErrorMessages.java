@@ -13,7 +13,9 @@ public enum ReservationErrorMessages {
     RESERVATION_ALREADY_EXISTS("Reservation with email %s already exists."),
     EMAIL_CANNOT_BE_NULL_OR_EMPTY("The email cannot be null or empty."),
     CHECK_IN_DATE_CANNOT_BE_IN_THE_PAST("Check in date cannot be in the past."),
-    CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE("Check in date cannot be after check out date.");
+    CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE("Check in date cannot be after check out date."),
+    CUSTOMER_CANNOT_BE_NULL("The customer cannot be null."),
+    ROOM_CANNOT_BE_NULL("The room cannot be null"),;
 
 
     private final String message;

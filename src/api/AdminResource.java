@@ -38,11 +38,11 @@ public class AdminResource {
     }
 
     public void addRooms(List<IRoom> rooms) {
-        this.roomService.addRooms(rooms);
+        this.roomService.createRooms(rooms);
     }
 
     public void addRoom(IRoom room) {
-        this.roomService.addRoom(room);
+        this.roomService.createRoom(room);
     }
 
     public Collection<IRoom> getAllRooms() {

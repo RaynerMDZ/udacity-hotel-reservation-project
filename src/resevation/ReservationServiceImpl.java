@@ -36,11 +36,6 @@ public class ReservationServiceImpl implements ReservationService {
         return instance;
     }
 
-    @Override
-    public void addRoom(final IRoom room) {
-
-        this.roomService.addRoom(room);
-    }
 
     @Override
     public IRoom getARoom(final String roomNumber) {
@@ -49,25 +44,32 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Collection<Reservation> reserveRoom(final Customer customer, final IRoom room, final Date checkInDate, final Date checkOutDate) {
+        if (customer == null) {
+            throw new IllegalArgumentException(ReservationErrorMessages.CUSTOMER_CANNOT_BE_NULL.getMessage());
+        }
+
+        if (room == null) {
+            throw new IllegalArgumentException(ReservationErrorMessages.ROOM_CANNOT_BE_NULL.getMessage());
+        }
+
         if (checkInDate.before(new Date())) {
-            throw new IllegalArgumentException(String.format(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_IN_THE_PAST.getMessage(), checkInDate));
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_IN_THE_PAST.getMessage());
         }
 
         if (checkInDate.after(checkOutDate)) {
-            throw new IllegalArgumentException(String.format(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE.getMessage(), checkInDate, checkOutDate));
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE.getMessage());
         }
-
         return this.reservationRepository.createReservation(new Reservation(customer, room, checkInDate, checkOutDate));
     }
 
     @Override
     public Collection<IRoom> findRooms(final Date checkInDate, final Date checkOutDate) {
         if (checkInDate.before(new Date())) {
-            throw new IllegalArgumentException("CheckIn date cannot be in the past.");
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_IN_THE_PAST.getMessage());
         }
 
         if (checkInDate.after(checkOutDate)) {
-            throw new IllegalArgumentException("CheckIn date cannot be after check out date.");
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE.getMessage());
         }
 
         Collection<Reservation> reservations = this.reservationRepository.getAllReservations();
@@ -78,18 +80,16 @@ public class ReservationServiceImpl implements ReservationService {
                                 && reservation.getCheckInDate().before(checkOutDate) && reservation.getCheckOutDate().after(checkInDate)))
                 .collect(Collectors.toList());
         return availableRooms;
-
     }
 
     @Override
     public Collection<IRoom> findRoomsForNextWeek(Date checkInDate, Date checkOutDate) {
-
         if (checkInDate.before(new Date())) {
-            throw new IllegalArgumentException("CheckIn date cannot be in the past.");
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_IN_THE_PAST.getMessage());
         }
 
         if (checkInDate.after(checkOutDate)) {
-            throw new IllegalArgumentException("CheckIn date cannot be after check out date.");
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE.getMessage());
         }
 
         Date checkInDateNextWeek = new Date(checkInDate.getTime() + 604800000);
@@ -99,6 +99,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Collection<Reservation> getCustomersReservation(final String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException(ReservationErrorMessages.EMAIL_CANNOT_BE_NULL_OR_EMPTY.getMessage());
+        }
         return this.reservationRepository.getCustomerReservations(email);
     }
 
@@ -109,11 +112,33 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Collection<Reservation> getReservationsForTheGivenWeek(Date checkInDate, Date checkOutDate) {
-        return null;
+        if (checkInDate.before(new Date())) {
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_IN_THE_PAST.getMessage());
+        }
+
+        if (checkInDate.after(checkOutDate)) {
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE.getMessage());
+        }
+
+        Collection<Reservation> reservations = this.reservationRepository.getAllReservations();
+        Collection<Reservation> reservationsForTheGivenWeek = reservations.stream()
+                .filter(reservation -> reservation.getCheckInDate().before(checkOutDate) && reservation.getCheckOutDate().after(checkInDate))
+                .collect(Collectors.toList());
+        return reservationsForTheGivenWeek;
     }
 
     @Override
     public Collection<Reservation> getReservationsForAWeekAfterTheGivenDate(Date checkInDate, Date checkOutDate) {
-        return null;
+        if (checkInDate.before(new Date())) {
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_IN_THE_PAST.getMessage());
+        }
+
+        if (checkInDate.after(checkOutDate)) {
+            throw new IllegalArgumentException(ReservationErrorMessages.CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE.getMessage());
+        }
+
+        Date checkInDateNextWeek = new Date(checkInDate.getTime() + 604800000);
+        Date checkOutDateNextWeek = new Date(checkOutDate.getTime() + 604800000);
+        return this.getReservationsForTheGivenWeek(checkInDateNextWeek, checkOutDateNextWeek);
     }
 }

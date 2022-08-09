@@ -75,7 +75,7 @@ public class AdminMenu {
 
     private void seeAllReservations() {
         System.out.println();
-        System.out.println(this.adminResource.displayAllReservations());
+        this.adminResource.displayAllReservations().forEach(System.out::println);
         System.out.println();
         AdminMenu.getInstance().adminMenu();
     }

@@ -14,11 +14,16 @@ public class Customer {
     private final String lastName;
     private String email;
 
+    public Customer() {
+        this.firstName = "";
+        this.lastName = "";
+        this.email = "";
+    }
+
     public Customer(String firstName, String lastName, String email) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-
     }
 
     public String getFirstName() {

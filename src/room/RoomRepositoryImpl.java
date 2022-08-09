@@ -46,16 +46,11 @@ public class RoomRepositoryImpl implements RoomRepository {
      * Returns the room with the given room number.
      * @param roomNumber The room number of the room to return.
      * @return The room with the given room number.
-     * @throws IllegalArgumentException If the room number is null or empty.
      * @throws IllegalArgumentException If the room with the given room number does not exist.
      * @see room.RoomRepository#getRoom(String)
      */
     @Override
     public IRoom getRoom(final String roomNumber) throws IllegalArgumentException {
-        if (roomNumber == null || roomNumber.isEmpty()) {
-            throw new IllegalArgumentException(RoomErrorMessages.ROOM_NUMBER_CANNOT_BE_NULL_OR_EMPTY.getMessage());
-        }
-
         if (!this.roomExists(roomNumber)) {
             throw new IllegalArgumentException(RoomErrorMessages.ROOM_DOES_NOT_EXIST.getMessage());
         }
@@ -65,16 +60,11 @@ public class RoomRepositoryImpl implements RoomRepository {
     /**
      * Adds a room to the repository.
      * @param room The room to add.
-     * @throws IllegalArgumentException If the room is null.
      * @throws IllegalArgumentException If the room already exists.
      * @see room.RoomRepository#createRoom(IRoom)
      */
     @Override
     public void createRoom(final IRoom room) {
-        if (room == null) {
-            throw new IllegalArgumentException(RoomErrorMessages.ROOM_CANNOT_BE_NULL.getMessage());
-        }
-
         if (this.roomExists(room.getRoomNumber())) {
             throw new IllegalArgumentException(String.format(RoomErrorMessages.ROOM_ALREADY_EXISTS.getMessage(), room.getRoomNumber()));
         }
@@ -84,15 +74,10 @@ public class RoomRepositoryImpl implements RoomRepository {
     /**
      * Adds a collection of rooms to the repository.
      * @param rooms The rooms to add.
-     * @throws IllegalArgumentException If the rooms are null or empty.
      * @see room.RoomRepository#createRooms(Collection)
      */
     @Override
     public void createRooms(final Collection<IRoom> rooms) throws IllegalArgumentException {
-        if (rooms == null || rooms.isEmpty()) {
-            throw new IllegalArgumentException(RoomErrorMessages.ROOMS_SET_CANNOT_BE_NULL_OR_EMPTY.getMessage());
-        }
-
         rooms.forEach(this::createRoom);
     }
 
