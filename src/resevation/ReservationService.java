@@ -6,6 +6,13 @@ import room.IRoom;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * Reservation Service interface.
+ *
+ * @author Rayner Mendez
+ * @version 1.0
+ * @since 1.0
+ */
 public interface ReservationService {
     public void addRoom(IRoom room);
     public IRoom getARoom(java.lang.String roomNumber);

@@ -1,5 +1,12 @@
 package room;
 
+/**
+ * Room model class.
+ *
+ * @author Rayner Mendez
+ * @version 1.0
+ * @since 1.0
+ */
 public class Room implements IRoom {
     private String roomNumber;
     private Double roomPrice;

@@ -1,5 +1,12 @@
 package resevation;
 
+/**
+ * Reservation error messages.
+ *
+ * @author Rayner Mendez
+ * @version 1.0
+ * @since 1.0
+ */
 public enum ReservationErrorMessages {
     RESERVATION_DOES_NOT_EXISTS("Reservation with email %s does not exist."),
     RESERVATION_CANNOT_BE_NULL("The reservation cannot be null."),

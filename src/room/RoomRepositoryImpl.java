@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 /**
- * Implementation of the RoomService interface.
+ * Implementation of the Room Repository interface.
  *
  * @author Rayner Mendez
  * @version 1.0
@@ -113,7 +113,7 @@ public class RoomRepositoryImpl implements RoomRepository {
 
     /**
      * Updates a room in the repository.
-     * @param room The rooms to update.
+     * @param room The room to update.
      * @throws IllegalArgumentException If the room with the given room number does not exist.
      * @see room.RoomRepository#updateRoom(IRoom)
      */

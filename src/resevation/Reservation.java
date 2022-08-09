@@ -5,6 +5,13 @@ import room.IRoom;
 
 import java.util.Date;
 
+/**
+* Reservation model class
+*
+* @author Rayner Mendez
+* @version 1.0
+* @since 1.0
+ */
 public class Reservation {
     private Customer customer;
     private IRoom room;

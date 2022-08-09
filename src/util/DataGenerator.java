@@ -36,7 +36,7 @@ public class DataGenerator {
     }
 
     public static void generateCustomer() {
-        customerService.createCustomer("rayner", "mendez", "rayner@gmail.com");
+        customerService.createCustomer( "Rayner", "Mendez", "rayner@gmail.com");
 
         System.out.println();
         System.out.println("Customer added successfully.");

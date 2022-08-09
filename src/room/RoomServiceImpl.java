@@ -3,6 +3,13 @@ package room;
 import java.util.Collection;
 import java.util.logging.Logger;
 
+/**
+ * Implementation of the Room Service interface.
+ *
+ * @author Rayner Mendez
+ * @version 1.0
+ * @since 1.0
+ */
 public class RoomServiceImpl implements RoomService {
 
     private final Logger logger = Logger.getLogger(RoomRepositoryImpl.class.getName());

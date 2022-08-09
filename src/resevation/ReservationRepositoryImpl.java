@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of the ReservationService interface.
+ * Implementation of the Reservation Repository interface.
  *
  * @author Rayner Mendez
  * @version 1.0

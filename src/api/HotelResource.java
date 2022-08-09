@@ -7,7 +7,6 @@ import customer.CustomerService;
 import customer.CustomerServiceImpl;
 import resevation.ReservationService;
 import resevation.ReservationServiceImpl;
-import util.RegexValidators;
 
 import java.util.Collection;
 import java.util.Date;

@@ -2,6 +2,13 @@ package room;
 
 import java.util.Collection;
 
+/**
+ * Room Repository interface.
+ *
+ * @author Rayner Mendez
+ * @version 1.0
+ * @since 1.0
+ */
 public interface RoomRepository {
     public Collection<IRoom> getAllRooms();
     public IRoom getRoom(String roomNumber) throws IllegalArgumentException;

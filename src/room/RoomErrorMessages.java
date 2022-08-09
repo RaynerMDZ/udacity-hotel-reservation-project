@@ -1,5 +1,12 @@
 package room;
 
+/**
+ * Room error messages.
+ *
+ * @author Rayner Mendez
+ * @version 1.0
+ * @since 1.0
+ */
 public enum RoomErrorMessages {
     ROOM_DOES_NOT_EXIST("Room with room number %s does not exist."),
     ROOM_ALREADY_EXISTS("Room with room number %s already exists."),

@@ -1,10 +1,12 @@
 package customer;
 
+import util.RegexValidators;
+
 import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
- * Implementation of the CustomerService interface.
+ * Implementation of the Customer Service interface.
  *
  * @author Rayner Mendez
  * @version 1.0
@@ -40,9 +42,14 @@ public class CustomerServiceImpl implements CustomerService {
      * @param email The email of the customer.
      * @return The customer with the given email.
      * @throws IllegalArgumentException If the email is null or empty.
+     * @throws IllegalArgumentException If the email is not validated.
      * @see CustomerRepository#getCustomer(String)
      */
     public Customer getCustomer(final String email) {
+        if (!RegexValidators.validateEmail(email)) {
+            throw new IllegalArgumentException(String.format(CustomerErrorMessages.INVALID_EMAIL.getMessage(), email));
+        }
+
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException(String.format(CustomerErrorMessages.EMAIL_CANNOT_BE_NULL_OR_EMPTY.getMessage(), email));
         }
@@ -57,11 +64,16 @@ public class CustomerServiceImpl implements CustomerService {
      * @throws IllegalArgumentException If the email is null or empty.
      * @throws IllegalArgumentException If the first name is null or empty.
      * @throws IllegalArgumentException If the last name is null or empty.
+     * @throws IllegalArgumentException If the email is not validated.
      * @see CustomerRepository#createCustomer(String, String, String)
      */
-    public void createCustomer(final String email, final String firstName, final String lastName) {
+    public void createCustomer(final String firstName, final String lastName, final String email) {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException(String.format(CustomerErrorMessages.EMAIL_CANNOT_BE_NULL_OR_EMPTY.getMessage(), email));
+        }
+
+        if (!RegexValidators.validateEmail(email)) {
+            throw new IllegalArgumentException(String.format(CustomerErrorMessages.INVALID_EMAIL.getMessage(), email));
         }
 
         if (firstName == null || firstName.isEmpty()) {
@@ -71,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (lastName == null || lastName.isEmpty()) {
             throw new IllegalArgumentException(String.format(CustomerErrorMessages.LAST_NAME_CANNOT_BE_NULL_OR_EMPTY.getMessage(), lastName));
         }
-        this.customerRepository.createCustomer(email, firstName, lastName);
+        this.customerRepository.createCustomer(firstName, lastName, email);
     }
 
     /**

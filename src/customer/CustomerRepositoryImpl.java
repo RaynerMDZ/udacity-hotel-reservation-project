@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 /**
- * Implementation of the CustomerService interface.
+ * Implementation of the Customer Repository interface.
  *
  * @author Rayner Mendez
  * @version 1.0
@@ -58,18 +58,18 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     /**
      * Creates a new customer in the repository.
-     * @param email The email of the customer.
      * @param firstName The first name of the customer.
      * @param lastName The last name of the customer.
+     * @param email The email of the customer.
      * @throws IllegalArgumentException If the email already exists in the repository.
      * @see customer.CustomerRepository#createCustomer(String, String, String)
      */
     @Override
-    public void createCustomer(final String email, final String firstName, final String lastName) throws IllegalArgumentException {
+    public void createCustomer(final String firstName, final String lastName, final String email) throws IllegalArgumentException {
         if (this.customerExists(email)) {
             throw new IllegalArgumentException(String.format(CustomerErrorMessages.CUSTOMER_ALREADY_EXISTS.getMessage(), email));
         }
-        this.customer.put(email, new Customer(email, firstName, lastName));
+        this.customer.put(email, new Customer(firstName, lastName, email));
 
     }
 

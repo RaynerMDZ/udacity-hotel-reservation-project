@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of the ReservationService interface.
+ * Implementation of the Reservation Service interface.
  *
  * @author Rayner Mendez
  * @version 1.0

@@ -1,39 +1,40 @@
 package customer;
 
-import util.RegexValidators;
-
 import java.util.Objects;
 
+/**
+ * Customer model class.
+ *
+ * @author Rayner Mendez
+ * @version 1.0
+ * @since 1.0
+ */
 public class Customer {
-    private java.lang.String firstName;
-    private java.lang.String lastName;
-    private java.lang.String email;
+    private final String firstName;
+    private final String lastName;
+    private String email;
 
-    public Customer(java.lang.String firstName, java.lang.String lastName, java.lang.String email) {
-        if (RegexValidators.validateEmail(email)) {
-            this.email = email;
-        } else {
-            throw new IllegalArgumentException("Invalid email address!");
-        }
+    public Customer(String firstName, String lastName, String email) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
 
     }
 
-    public java.lang.String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public java.lang.String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public java.lang.String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public java.lang.String toString() {
-        return "First Name: " + firstName + "\nLast Name: " + lastName + "\nEmail: " + email;
+    public String toString() {
+        return "First Name: " + firstName + ", Last Name: " + lastName + ", Email: " + email;
     }
 
     @Override

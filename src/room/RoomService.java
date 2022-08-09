@@ -1,9 +1,14 @@
 package room;
 
-import room.IRoom;
-
 import java.util.Collection;
 
+/**
+ * Room Service interface.
+ *
+ * @author Rayner Mendez
+ * @version 1.0
+ * @since 1.0
+ */
 public interface RoomService {
     public Collection<IRoom> getAllRooms();
     public IRoom getRoom(String roomNumber) throws IllegalArgumentException;
