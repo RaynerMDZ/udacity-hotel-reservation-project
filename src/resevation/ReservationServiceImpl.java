@@ -4,6 +4,7 @@ import customer.Customer;
 import room.IRoom;
 import room.RoomService;
 import room.RoomServiceImpl;
+import util.RegexValidators;
 
 import java.util.Collection;
 import java.util.Date;
@@ -102,6 +103,11 @@ public class ReservationServiceImpl implements ReservationService {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException(ReservationErrorMessages.EMAIL_CANNOT_BE_NULL_OR_EMPTY.getMessage());
         }
+
+        if (!RegexValidators.validateEmail(email)) {
+            throw new IllegalArgumentException(String.format(ReservationErrorMessages.EMAIL_NOT_VALID.getMessage(), "'" + email + "'"));
+        }
+
         return this.reservationRepository.getCustomerReservations(email);
     }
 

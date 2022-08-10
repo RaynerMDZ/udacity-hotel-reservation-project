@@ -47,16 +47,11 @@ public class ReservationRepositoryImpl implements ReservationRepository {
      * Returns the reservations for the customer email.
      * @param email The email of the customer.
      * @return The reservations for the customer.
-     * @throws IllegalArgumentException If the email is null or empty.
      * @throws IllegalArgumentException If the email does not exist in the repository.
      * @see resevation.ReservationRepository#getReservation(String)
      */
     @Override
     public Collection<Reservation> getReservation(final String email) throws IllegalArgumentException {
-        if (email == null || email.isEmpty()) {
-            throw new IllegalArgumentException(String.format(ReservationErrorMessages.EMAIL_CANNOT_BE_NULL_OR_EMPTY.getMessage(), email));
-        }
-
         if (this.reservations.containsKey(email)) {
             throw new IllegalArgumentException(String.format(ReservationErrorMessages.RESERVATION_DOES_NOT_EXISTS.getMessage(), email));
         }
@@ -86,16 +81,11 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     /**
      * Updates a reservation from the repository.
      * @param reservation The reservation to update.
-     * @throws IllegalArgumentException If the reservation is null.
      * @throws IllegalArgumentException If the reservation does not exist in the repository.
      * @see resevation.ReservationRepository#updateReservation(Reservation)
      */
     @Override
     public void updateReservation(final Reservation reservation) {
-        if (reservation == null) {
-            throw new IllegalArgumentException(String.format(ReservationErrorMessages.RESERVATION_CANNOT_BE_NULL.getMessage(), reservation));
-        }
-
         if (this.reservations.containsKey(reservation.getCustomer().getEmail())) {
             this.reservations.get(reservation.getCustomer().getEmail()).add(reservation);
         } else {
@@ -108,16 +98,11 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     /**
      * Removes a reservation from the repository.
      * @param reservation The reservation to remove.
-     * @throws IllegalArgumentException If the reservation is null.
      * @throws IllegalArgumentException If the reservation does not exist in the repository.
      * @see resevation.ReservationRepository#removeReservation(resevation.Reservation)
      */
     @Override
     public void removeReservation(final Reservation reservation) {
-        if (reservation == null) {
-            throw new IllegalArgumentException(ReservationErrorMessages.RESERVATION_CANNOT_BE_NULL.getMessage());
-        }
-
         if (!this.reservations.containsKey(reservation.getCustomer().getEmail())) {
             throw new IllegalArgumentException(String.format(ReservationErrorMessages.RESERVATION_DOES_NOT_EXISTS.getMessage(), reservation.getCustomer().getEmail()));
         }
@@ -128,16 +113,11 @@ public class ReservationRepositoryImpl implements ReservationRepository {
      * Returns all reservations from a customer in the repository as a new list of Reservation objects.
      * @param email The email of the customer.
      * @return A new list of Reservation objects.
-     * @throws IllegalArgumentException If the email is null or empty.
      * @throws IllegalArgumentException If the email does not exist in the repository.
      * @see resevation.ReservationRepository#getAllReservations()
      */
     @Override
     public Collection<Reservation> getCustomerReservations(final String email) {
-        if (email == null || email.isEmpty()) {
-            throw new IllegalArgumentException(String.format(ReservationErrorMessages.EMAIL_CANNOT_BE_NULL_OR_EMPTY.getMessage(), email));
-        }
-
         if (!this.reservations.containsKey(email)) {
             throw new IllegalArgumentException(String.format(ReservationErrorMessages.RESERVATION_DOES_NOT_EXISTS.getMessage(), email));
         }

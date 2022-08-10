@@ -15,7 +15,8 @@ public enum ReservationErrorMessages {
     CHECK_IN_DATE_CANNOT_BE_IN_THE_PAST("Check in date cannot be in the past."),
     CHECK_IN_DATE_CANNOT_BE_AFTER_CHECK_OUT_DATE("Check in date cannot be after check out date."),
     CUSTOMER_CANNOT_BE_NULL("The customer cannot be null."),
-    ROOM_CANNOT_BE_NULL("The room cannot be null"),;
+    ROOM_CANNOT_BE_NULL("The room cannot be null"),
+    EMAIL_NOT_VALID("The email %s is not valid.");
 
 
     private final String message;

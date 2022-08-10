@@ -43,15 +43,20 @@ public class CustomerServiceImpl implements CustomerService {
      * @return The customer with the given email.
      * @throws IllegalArgumentException If the email is null or empty.
      * @throws IllegalArgumentException If the email is not validated.
+     * @throws IllegalArgumentException If the email contains blank spaces.
      * @see CustomerRepository#getCustomer(String)
      */
     public Customer getCustomer(final String email) {
-        if (!RegexValidators.validateEmail(email)) {
-            throw new IllegalArgumentException(String.format(CustomerErrorMessages.INVALID_EMAIL.getMessage(), email));
-        }
-
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException(String.format(CustomerErrorMessages.EMAIL_CANNOT_BE_NULL_OR_EMPTY.getMessage(), email));
+        }
+
+        if (email.contains(" ")) {
+            throw new IllegalArgumentException(String.format(CustomerErrorMessages.EMAIL_CANNOT_CONTAIN_BLANK_SPACES.getMessage(), email));
+        }
+
+        if (!RegexValidators.validateEmail(email)) {
+            throw new IllegalArgumentException(String.format(CustomerErrorMessages.INVALID_EMAIL.getMessage(), email));
         }
         return this.customerRepository.getCustomer(email);
     }
@@ -62,14 +67,21 @@ public class CustomerServiceImpl implements CustomerService {
      * @param firstName The first name of the customer.
      * @param lastName The last name of the customer.
      * @throws IllegalArgumentException If the email is null or empty.
-     * @throws IllegalArgumentException If the first name is null or empty.
-     * @throws IllegalArgumentException If the last name is null or empty.
      * @throws IllegalArgumentException If the email is not validated.
+     * @throws IllegalArgumentException If the email contains blank spaces.
+     * @throws IllegalArgumentException If the first name is null or empty.
+     * @throws IllegalArgumentException If the first name contains blank spaces.
+     * @throws IllegalArgumentException If the last name is null or empty.
+     * @throws IllegalArgumentException If the last name contains blank spaces.
      * @see CustomerRepository#createCustomer(String, String, String)
      */
     public void createCustomer(final String firstName, final String lastName, final String email) {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException(String.format(CustomerErrorMessages.EMAIL_CANNOT_BE_NULL_OR_EMPTY.getMessage(), email));
+        }
+
+        if (email.contains(" ")) {
+            throw new IllegalArgumentException(String.format(CustomerErrorMessages.EMAIL_CANNOT_CONTAIN_BLANK_SPACES.getMessage(), email));
         }
 
         if (!RegexValidators.validateEmail(email)) {
@@ -80,9 +92,18 @@ public class CustomerServiceImpl implements CustomerService {
             throw new IllegalArgumentException(String.format(CustomerErrorMessages.FIRST_NAME_CANNOT_BE_NULL_OR_EMPTY.getMessage(), firstName));
         }
 
+        if (firstName.contains(" ")) {
+            throw new IllegalArgumentException(String.format(CustomerErrorMessages.FIRST_NAME_CANNOT_CONTAIN_BLANK_SPACES.getMessage(), firstName));
+        }
+
         if (lastName == null || lastName.isEmpty()) {
             throw new IllegalArgumentException(String.format(CustomerErrorMessages.LAST_NAME_CANNOT_BE_NULL_OR_EMPTY.getMessage(), lastName));
         }
+
+        if (lastName.contains(" ")) {
+            throw new IllegalArgumentException(String.format(CustomerErrorMessages.LAST_NAME_CANNOT_CONTAIN_BLANK_SPACES.getMessage(), lastName));
+        }
+
         this.customerRepository.createCustomer(firstName, lastName, email);
     }
 
